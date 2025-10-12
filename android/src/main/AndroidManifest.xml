@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="iq.aau.babylai_flutter">
+    <!-- Required permissions for BabylAI SDK -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <application>
+        <activity
+            android:name="iq.aau.babylai_flutter.BabylAIHostActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+    </application>
+</manifest>

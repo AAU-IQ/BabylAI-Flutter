@@ -1,0 +1,170 @@
+group = "iq.aau.babylai_flutter"
+
+buildscript {
+    ext.kotlin_version = "2.1.0"
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.9.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        // Required for Kotlin 2.x with Compose enabled
+        classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlin_version")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://raw.githubusercontent.com/AAU-IQ/BabylAI-Android/main/releases")
+            metadataSources {
+                mavenPom()
+                artifact()
+            }
+            content { includeGroup("iq.aau.babylai.android") }
+        }
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    maven {
+        url = uri("https://raw.githubusercontent.com/AAU-IQ/BabylAI-Android/main/releases")
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+        content { includeGroup("iq.aau.babylai.android") }
+    }
+    maven { url = uri("https://jitpack.io") }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "org.jetbrains.kotlin.plugin.compose"
+
+android {
+    namespace = "iq.aau.babylai_flutter"
+
+    compileSdk = 36
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+    }
+
+    defaultConfig {
+        minSdk = 24
+        consumerProguardFiles("proguard-rules.pro")
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        // Let AGP/Kotlin manage the compiler extension; omit explicit version to avoid mismatch
+    }
+
+    // Resolve BabylAI Android SDK version from:
+    // 1) Gradle property BABYLAI_SDK_VERSION
+    // 2) android/local.properties -> babylai.android.version
+    // 3) Fallback to a placeholder that will likely fail fast if not set
+    def resolveBabylaiVersion = {
+        def v = project.findProperty("BABYLAI_SDK_VERSION")
+        if (v != null && v.toString().trim()) return v.toString().trim()
+        def propsFile = file("local.properties")
+        if (propsFile.exists()) {
+            def p = new Properties()
+            propsFile.withInputStream { p.load(it) }
+            def lp = p.getProperty("babylai.android.version")
+            if (lp != null && lp.toString().trim()) return lp.toString().trim()
+        }
+        return null
+    }
+    def babylaiSdkVersion = resolveBabylaiVersion()
+    if (babylaiSdkVersion == null || babylaiSdkVersion.isEmpty()) {
+        babylaiSdkVersion = "0.0.0-SNAPSHOT" // set explicitly to avoid '+' and make versioning deterministic
+        logger.lifecycle("[BabylAI] Using default SDK version: ${babylaiSdkVersion}. Set BABYLAI_SDK_VERSION or ../sdk_version.txt to override.")
+    }
+
+    dependencies {
+        // BabylAI Android SDK from remote Maven (GitHub raw releases)
+        implementation("iq.aau.babylai.android:babylaisdk:${babylaiSdkVersion}")
+
+        // Manually add transitive dependencies of BabylAISDK
+        api("androidx.core:core-ktx:1.12.0")
+        api("androidx.appcompat:appcompat:1.6.1")
+        api("com.google.android.material:material:1.11.0")
+
+        // Jetpack Compose BOM
+        api(platform("androidx.compose:compose-bom:2024.02.01"))
+
+        // Compose dependencies
+        api("androidx.compose.ui:ui")
+        api("androidx.compose.ui:ui-graphics")
+        api("androidx.compose.ui:ui-tooling-preview")
+        api("androidx.compose.runtime:runtime")
+        api("androidx.compose.foundation:foundation")
+        api("androidx.compose.material:material")
+        api("androidx.compose.material3:material3")
+        api("androidx.compose.material:material-icons-core")
+        api("androidx.compose.material:material-icons-extended")
+        api("androidx.compose.ui:ui-unit")
+        api("androidx.compose.ui:ui-text")
+        api("com.airbnb.android:lottie-compose:6.3.0")
+
+        // Window and Activity dependencies for system UI control
+        api("androidx.activity:activity-compose:1.8.2")
+
+        // Kotlin Serialization
+        api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+        // Ably Realtime SDK
+        api("io.ably:ably-java:1.2.54")
+        api("org.slf4j:slf4j-simple:2.0.7")
+
+        // Retrofit for networking
+        api("com.squareup.retrofit2:retrofit:2.9.0")
+        api("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+        api("com.squareup.okhttp3:okhttp:4.12.0")
+        api("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+        // Security - Encrypted SharedPreferences
+        api("androidx.security:security-crypto:1.1.0-alpha06")
+
+        // ViewModel for MVVM architecture
+        api("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+        api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
+        testImplementation("org.jetbrains.kotlin:kotlin-test")
+        testImplementation("org.mockito:mockito-core:5.0.0")
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
+}

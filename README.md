@@ -22,11 +22,16 @@ A Flutter plugin that provides seamless integration with BabylAI's native Androi
 
 ## Installation
 
+### Option 1: Install from GitHub (Recommended)
+
 Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  babylai_flutter: ^1.0.0
+  babylai_flutter:
+    git:
+      url: https://github.com/AAU-IQ/BabylAI-Flutter.git
+      ref: main  # or specify a version tag like v1.0.0
 ```
 
 Then run:
@@ -875,7 +880,7 @@ This Flutter plugin wraps the following native SDKs:
 
 ## Contributing
 
-For issues or feature requests, please visit the [issue tracker](https://github.com/AAU-IQ/babyl-sdks/issues).
+For issues or feature requests, please visit the [issue tracker](https://github.com/AAU-IQ/BabylAI-Flutter/issues).
 
 ## License
 
@@ -892,6 +897,7 @@ For support, please contact: info@babylai.net
 ## Related Links
 
 - [BabylAI Website](https://babylai.net)
+- [BabylAI Flutter Plugin Repository](https://github.com/AAU-IQ/BabylAI-Flutter)
 - [BabylAI Android SDK](https://github.com/AAU-IQ/BabylAI-Android)
 - [BabylAI iOS SDK](https://github.com/AAU-IQ/BabylAI-iOS)
 - [Custom Logo Setup Guide](CUSTOM_LOGO.md)

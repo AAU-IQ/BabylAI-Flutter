@@ -19,30 +19,14 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url = uri("https://raw.githubusercontent.com/AAU-IQ/BabylAI-Android/main/releases")
-            metadataSources {
-                mavenPom()
-                artifact()
-            }
-            content { includeGroup("iq.aau.babylai.android") }
-        }
-        maven { url = uri("https://jitpack.io") }
+        // BabylAI Android SDK is now available on Maven Central
+        // No custom repository configuration needed!
     }
 }
 
 repositories {
     google()
     mavenCentral()
-    maven {
-        url = uri("https://raw.githubusercontent.com/AAU-IQ/BabylAI-Android/main/releases")
-        metadataSources {
-            mavenPom()
-            artifact()
-        }
-        content { includeGroup("iq.aau.babylai.android") }
-    }
-    maven { url = uri("https://jitpack.io") }
 }
 
 apply plugin: "com.android.library"
@@ -121,8 +105,7 @@ android {
     }
 
     dependencies {
-        // BabylAI Android SDK from remote Maven (GitHub raw releases)
-        implementation("iq.aau.babylai.android:babylaisdk:${babylaiSdkVersion}")
+        implementation("io.github.aau-iq:babylai-android-sdk:${babylaiSdkVersion}")
 
         // Manually add transitive dependencies of BabylAISDK
         api("androidx.core:core-ktx:1.12.0")

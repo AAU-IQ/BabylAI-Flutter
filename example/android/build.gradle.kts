@@ -1,19 +1,3 @@
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven {
-            url = uri("https://raw.githubusercontent.com/AAU-IQ/BabylAI-Android/main/releases")
-            metadataSources {
-                mavenPom()
-                artifact()
-            }
-            content { includeGroup("iq.aau.babylai.android") }
-        }
-        maven { url = uri("https://jitpack.io") }
-    }
-}
-
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")

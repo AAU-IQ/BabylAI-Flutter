@@ -77,14 +77,9 @@ For troubleshooting and advanced configuration, refer to the [complete iOS setup
 
 #### Android Setup
 
-The Android setup is handled automatically through Gradle dependencies. The plugin will:
+✅ **No setup required!** The Android SDK is automatically downloaded from Maven Central.
 
-- Automatically add the BabylAI Android SDK from the GitHub Maven repository
-- Configure all necessary dependencies
-- Set up the minimum SDK version (24)
-- Apply ProGuard rules for release builds
-
-**Important:** Ensure your `android/app/build.gradle` has a minimum SDK version of 24:
+**Only requirement:** Ensure your `android/app/build.gradle` has a minimum SDK version of 24:
 
 ```gradle
 android {
@@ -94,6 +89,11 @@ android {
     }
 }
 ```
+
+The plugin automatically:
+- Downloads the BabylAI Android SDK from Maven Central (`io.github.aau-iq:babylai-android-sdk`)
+- Configures all necessary dependencies
+- Applies ProGuard rules for release builds
 
 ## Usage
 
@@ -818,10 +818,11 @@ await BabylaiFlutter.initialize(
 
 This Flutter plugin wraps the following native SDKs:
 
-- **Android**: BabylAI Android SDK v1.0.61-beta (`iq.aau.babylai.android:babylaisdk`)
+- **Android**: BabylAI Android SDK v1.0.61-beta
+  - Maven Central: `io.github.aau-iq:babylai-android-sdk:1.0.61-beta`
   - Repository: [AAU-IQ/BabylAI-Android](https://github.com/AAU-IQ/BabylAI-Android)
   - Minimum Android SDK: 24
-  - Automatic dependency management via Gradle
+  - ✅ Automatic dependency management via Maven Central
   
 - **iOS**: BabylAI iOS SDK v1.0.37
   - Repository: [AAU-IQ/BabylAI-iOS](https://github.com/AAU-IQ/BabylAI-iOS)

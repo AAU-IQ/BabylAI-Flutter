@@ -1,5 +1,5 @@
 android:
-  version: "1.0.61-beta3"
+  version: "1.0.61"
 ios:
   version: "1.0.37"
 

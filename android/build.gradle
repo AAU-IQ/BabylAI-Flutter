@@ -83,11 +83,15 @@ android {
 
     // Resolve BabylAI Android SDK version from:
     // 1) Gradle property BABYLAI_SDK_VERSION
-    // 2) android/local.properties -> babylai.android.version
-    // 3) Fallback to a placeholder that will likely fail fast if not set
+    // 2) android/local.properties -> babylai.android.version (developer override)
+    // 3) ../sdk_config.yaml -> android.version (committed version config)
+    // 4) Fallback to a placeholder that will likely fail fast if not set
     def resolveBabylaiVersion = {
+        // 1. Check Gradle property
         def v = project.findProperty("BABYLAI_SDK_VERSION")
         if (v != null && v.toString().trim()) return v.toString().trim()
+        
+        // 2. Check local.properties (developer override)
         def propsFile = file("local.properties")
         if (propsFile.exists()) {
             def p = new Properties()
@@ -95,12 +99,25 @@ android {
             def lp = p.getProperty("babylai.android.version")
             if (lp != null && lp.toString().trim()) return lp.toString().trim()
         }
+        
+        // 3. Check sdk_config.yaml (committed version - for plugin users)
+        def configFile = file("../sdk_config.yaml")
+        if (configFile.exists()) {
+            def configText = configFile.text
+            def versionMatch = configText =~ /android:\s*\n\s*version:\s*"([^"]+)"/
+            if (versionMatch.find()) {
+                return versionMatch.group(1)
+            }
+        }
+        
         return null
     }
     def babylaiSdkVersion = resolveBabylaiVersion()
     if (babylaiSdkVersion == null || babylaiSdkVersion.isEmpty()) {
         babylaiSdkVersion = "0.0.0-SNAPSHOT" // set explicitly to avoid '+' and make versioning deterministic
-        logger.lifecycle("[BabylAI] Using default SDK version: ${babylaiSdkVersion}. Set BABYLAI_SDK_VERSION or ../sdk_version.txt to override.")
+        logger.lifecycle("[BabylAI] ⚠️  No Android SDK version found! Checked BABYLAI_SDK_VERSION, local.properties, and sdk_config.yaml. Using default: ${babylaiSdkVersion}")
+    } else {
+        logger.lifecycle("[BabylAI] Using Android SDK version: ${babylaiSdkVersion}")
     }
 
     dependencies {

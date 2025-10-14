@@ -2,7 +2,7 @@
   <img src="https://babylai.net/assets/logo-BdByHTQ3.svg" alt="BabylAI Logo" height="200"/>
 </p>
 
-# BabylAI Flutter Plugin
+# BabylAI Flutter
 
 A Flutter plugin that provides seamless integration with BabylAI's native Android and iOS SDKs, enabling AI-powered chat functionality in your Flutter applications.
 

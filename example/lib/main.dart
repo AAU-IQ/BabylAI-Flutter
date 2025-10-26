@@ -8,11 +8,33 @@ import 'package:http/http.dart' as http;
 import 'package:babylai_flutter/models/theme_config.dart';
 
 void main() async {
+  Future<String> getAuthToken() async {
+    // Example: Fetch token from your backend
+    final response = await http.post(
+      Uri.parse(
+        'https://babylai-be.dev.kvm.creativeadvtech.ml/Auth/client/get-token',
+      ),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'apiKey': 'API_KEY',
+        'tenantId': 'TENANT_ID',
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      print("Token ${data['token'] as String}");
+      return data['token'] as String;
+    }
+
+    throw Exception('Failed to get token');
+  }
+
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize BabylAI
   await BabylaiFlutter.initialize(
-    environmentConfig: EnvironmentConfig.production(
+    environmentConfig: EnvironmentConfig.development(
       enableLogging:
           true, // Enable logging for debugging (set to false in production)
     ),
@@ -29,7 +51,7 @@ void main() async {
       // See CUSTOM_LOGO.md for detailed setup instructions
     ),
     tokenCallback: () async {
-      return 'YOUR_TOKEN';
+      return getAuthToken();
     },
     onMessageReceived: (message) {
       debugPrint('📨 New message received: $message');

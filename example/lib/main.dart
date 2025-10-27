@@ -45,7 +45,7 @@ void main() async {
       secondaryColorHex: '#283238',
       primaryColorDarkHex: '#F05A28',
       secondaryColorDarkHex: '#ffffff',
-      // headerLogo: 'CUSTOM_LOGO', //Optional: Custom logo configuration:
+      headerLogo: 'meta', //Optional: Custom logo configuration:
       // - iOS: Add to Assets.xcassets as 'meta' OR use Flutter asset path 'assets/svgs/meta.svg'
       // - Android: Add meta.png to android/app/src/main/res/drawable/
       // See CUSTOM_LOGO.md for detailed setup instructions
@@ -167,21 +167,7 @@ class _BabylAIDemoState extends State<BabylAIDemo> {
     }
   }
 
-  Future<void> _launchActiveChat() async {
-    try {
-      final screenId = _currentLocale == BabylAILocale.arabic
-          ? 'ARABIC_SCREEN_ID'
-          : 'ENGLISH_SCREEN_ID';
-      await BabylaiFlutter.launchActiveChat(
-        screenId: screenId,
-        theme: _currentTheme,
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error launching active chat: $e')),
-      );
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -247,15 +233,15 @@ class _BabylAIDemoState extends State<BabylAIDemo> {
               ),
               const SizedBox(height: 16),
 
-              ElevatedButton.icon(
-                onPressed: _isInitialized ? _launchActiveChat : null,
-                icon: const Icon(Icons.chat_bubble),
-                label: const Text('Launch Active Chat'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(200, 50),
-                ),
-              ),
-              const SizedBox(height: 32),
+              // ElevatedButton.icon(
+              //   onPressed: _isInitialized ? _launchActiveChat : null,
+              //   icon: const Icon(Icons.chat_bubble),
+              //   label: const Text('Launch Active Chat'),
+              //   style: ElevatedButton.styleFrom(
+              //     minimumSize: const Size(200, 50),
+              //   ),
+              // ),
+              // const SizedBox(height: 32),
 
               // Settings
               Text('Settings', style: Theme.of(context).textTheme.titleLarge),

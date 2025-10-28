@@ -8,45 +8,28 @@ import 'package:http/http.dart' as http;
 import 'package:babylai_flutter/models/theme_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-late final String _englishScreenId;
-late final String _arabicScreenId;
+late final String? _screenId;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await dotenv.load(fileName: '.env');
-  } catch (error) {
-    debugPrint('Falling back to .env.example: $error');
-    await dotenv.load(fileName: '.env.example');
-  }
+
+  await dotenv.load(fileName: '.env');
 
   final apiKey = dotenv.env['API_KEY'];
   final tenantId = dotenv.env['TENANT_ID'];
-  final defaultScreenId =
-      (dotenv.env['SCREEN_ID'] ?? dotenv.env['ENGLISH_SCREEN_ID'])?.trim();
-  final englishScreenId =
-      (dotenv.env['ENGLISH_SCREEN_ID'] ?? defaultScreenId)?.trim();
-  final arabicScreenId =
-      (dotenv.env['ARABIC_SCREEN_ID'] ?? defaultScreenId)?.trim();
+  _screenId = dotenv.env['SCREEN_ID'];
 
-  if (apiKey == null || apiKey.isEmpty || tenantId == null || tenantId.isEmpty) {
+  if (apiKey == null ||
+      apiKey.isEmpty ||
+      tenantId == null ||
+      tenantId.isEmpty ||
+      _screenId == null ||
+      _screenId?.isEmpty == true) {
     throw Exception(
-      'Missing API_KEY or TENANT_ID in .env.\n'
+      'Missing API_KEY or TENANT_ID or SCREEN_ID in .env.\n'
       'Create example/.env based on example/.env.example and add your credentials.',
     );
   }
-
-  if (englishScreenId == null || englishScreenId.isEmpty) {
-    throw Exception(
-      'Missing SCREEN_ID or ENGLISH_SCREEN_ID in .env.\n'
-      'Create example/.env based on example/.env.example and add the screen identifier(s).',
-    );
-  }
-
-  _englishScreenId = englishScreenId;
-  _arabicScreenId = arabicScreenId == null || arabicScreenId.isEmpty
-      ? _englishScreenId
-      : arabicScreenId;
 
   Future<String> getAuthToken() async {
     // Example: Fetch token from your backend
@@ -179,11 +162,9 @@ class _BabylAIDemoState extends State<BabylAIDemo> {
   }
 
   Future<void> _launchChat() async {
-    final screenId =
-        _currentLocale == BabylAILocale.arabic ? _arabicScreenId : _englishScreenId;
     try {
       await BabylaiFlutter.launchChat(
-        screenId: screenId,
+        screenId: _screenId,
         theme: _currentTheme,
         onMessageReceived: (message) {
           ScaffoldMessenger.of(

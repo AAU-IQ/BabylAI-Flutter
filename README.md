@@ -414,8 +414,6 @@ You can customize the header logo displayed in the BabylAI chat interface:
 - **iOS**: Add your logo to `ios/Runner/Assets.xcassets` as an image set named `company_logo`, OR use a Flutter asset path like `assets/images/logo.png`
 - **Android**: Add your logo to `android/app/src/main/res/drawable/` as `company_logo.png` or `company_logo.xml` (SVG as vector drawable). Reference by name only: `company_logo`
 
-> **📖 For detailed custom logo setup instructions, see [CUSTOM_LOGO.md](CUSTOM_LOGO.md)**
-
 ## API Reference
 
 ### BabylaiFlutter Class

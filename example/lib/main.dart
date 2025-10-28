@@ -1,13 +1,53 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:babylai_flutter/babylai_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:babylai_flutter/models/theme_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() async {
+late final String _englishScreenId;
+late final String _arabicScreenId;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (error) {
+    debugPrint('Falling back to .env.example: $error');
+    await dotenv.load(fileName: '.env.example');
+  }
+
+  final apiKey = dotenv.env['API_KEY'];
+  final tenantId = dotenv.env['TENANT_ID'];
+  final defaultScreenId =
+      (dotenv.env['SCREEN_ID'] ?? dotenv.env['ENGLISH_SCREEN_ID'])?.trim();
+  final englishScreenId =
+      (dotenv.env['ENGLISH_SCREEN_ID'] ?? defaultScreenId)?.trim();
+  final arabicScreenId =
+      (dotenv.env['ARABIC_SCREEN_ID'] ?? defaultScreenId)?.trim();
+
+  if (apiKey == null || apiKey.isEmpty || tenantId == null || tenantId.isEmpty) {
+    throw Exception(
+      'Missing API_KEY or TENANT_ID in .env.\n'
+      'Create example/.env based on example/.env.example and add your credentials.',
+    );
+  }
+
+  if (englishScreenId == null || englishScreenId.isEmpty) {
+    throw Exception(
+      'Missing SCREEN_ID or ENGLISH_SCREEN_ID in .env.\n'
+      'Create example/.env based on example/.env.example and add the screen identifier(s).',
+    );
+  }
+
+  _englishScreenId = englishScreenId;
+  _arabicScreenId = arabicScreenId == null || arabicScreenId.isEmpty
+      ? _englishScreenId
+      : arabicScreenId;
+
   Future<String> getAuthToken() async {
     // Example: Fetch token from your backend
     final response = await http.post(
@@ -15,22 +55,16 @@ void main() async {
         'https://babylai-be.dev.kvm.creativeadvtech.ml/Auth/client/get-token',
       ),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'apiKey': 'API_KEY',
-        'tenantId': 'TENANT_ID',
-      }),
+      body: jsonEncode({'apiKey': apiKey, 'tenantId': tenantId}),
     );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print("Token ${data['token'] as String}");
       return data['token'] as String;
     }
 
     throw Exception('Failed to get token');
   }
-
-  WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize BabylAI
   await BabylaiFlutter.initialize(
@@ -39,7 +73,6 @@ void main() async {
           true, // Enable logging for debugging (set to false in production)
     ),
     locale: BabylAILocale.english,
-    userInfo: {'userId': 'demo_user_123', 'name': 'Demo User'},
     themeConfig: const ThemeConfig(
       primaryColorHex: '#F05A28',
       secondaryColorHex: '#283238',
@@ -146,11 +179,9 @@ class _BabylAIDemoState extends State<BabylAIDemo> {
   }
 
   Future<void> _launchChat() async {
+    final screenId =
+        _currentLocale == BabylAILocale.arabic ? _arabicScreenId : _englishScreenId;
     try {
-      // Use screenId values from the iOS example
-      final screenId = _currentLocale == BabylAILocale.arabic
-          ? 'ARABIC_SCREEN_ID'
-          : 'ENGLISH_SCREEN_ID';
       await BabylaiFlutter.launchChat(
         screenId: screenId,
         theme: _currentTheme,
@@ -166,8 +197,6 @@ class _BabylAIDemoState extends State<BabylAIDemo> {
       ).showSnackBar(SnackBar(content: Text('Error launching chat: $e')));
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {

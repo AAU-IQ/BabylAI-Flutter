@@ -34,3 +34,6 @@ migrate_working_dir/
 
 # iOS auto-generated dependencies
 ios/BabylAI-Remote/
+
+# Local environment overrides
+example/.env

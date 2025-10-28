@@ -1,13 +1,36 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:babylai_flutter/babylai_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:babylai_flutter/models/theme_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() async {
+late final String? _screenId;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: '.env');
+
+  final apiKey = dotenv.env['API_KEY'];
+  final tenantId = dotenv.env['TENANT_ID'];
+  _screenId = dotenv.env['SCREEN_ID'];
+
+  if (apiKey == null ||
+      apiKey.isEmpty ||
+      tenantId == null ||
+      tenantId.isEmpty ||
+      _screenId == null ||
+      _screenId?.isEmpty == true) {
+    throw Exception(
+      'Missing API_KEY or TENANT_ID or SCREEN_ID in .env.\n'
+      'Create example/.env based on example/.env.example and add your credentials.',
+    );
+  }
+
   Future<String> getAuthToken() async {
     // Example: Fetch token from your backend
     final response = await http.post(
@@ -15,22 +38,16 @@ void main() async {
         'https://babylai-be.dev.kvm.creativeadvtech.ml/Auth/client/get-token',
       ),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'apiKey': 'API_KEY',
-        'tenantId': 'TENANT_ID',
-      }),
+      body: jsonEncode({'apiKey': apiKey, 'tenantId': tenantId}),
     );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print("Token ${data['token'] as String}");
       return data['token'] as String;
     }
 
     throw Exception('Failed to get token');
   }
-
-  WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize BabylAI
   await BabylaiFlutter.initialize(
@@ -39,7 +56,6 @@ void main() async {
           true, // Enable logging for debugging (set to false in production)
     ),
     locale: BabylAILocale.english,
-    userInfo: {'userId': 'demo_user_123', 'name': 'Demo User'},
     themeConfig: const ThemeConfig(
       primaryColorHex: '#F05A28',
       secondaryColorHex: '#283238',
@@ -147,12 +163,8 @@ class _BabylAIDemoState extends State<BabylAIDemo> {
 
   Future<void> _launchChat() async {
     try {
-      // Use screenId values from the iOS example
-      final screenId = _currentLocale == BabylAILocale.arabic
-          ? 'ARABIC_SCREEN_ID'
-          : 'ENGLISH_SCREEN_ID';
       await BabylaiFlutter.launchChat(
-        screenId: screenId,
+        screenId: _screenId,
         theme: _currentTheme,
         onMessageReceived: (message) {
           ScaffoldMessenger.of(
@@ -166,8 +178,6 @@ class _BabylAIDemoState extends State<BabylAIDemo> {
       ).showSnackBar(SnackBar(content: Text('Error launching chat: $e')));
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {

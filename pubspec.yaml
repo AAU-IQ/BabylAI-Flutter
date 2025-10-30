@@ -1,4 +1,4 @@
-name: babylai_flutter
+name: babylai
 description: "Flutter plugin for BabylAI SDK - AI-powered chat integration with support for multiple themes and languages."
 version: 1.0.13+5
 homepage: https://github.com/AAU-IQ/BabylAI-Flutter

@@ -28,10 +28,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  babylai_flutter:
-    git:
-      url: https://github.com/AAU-IQ/BabylAI-Flutter.git
-      ref: main  # or specify a version tag like v1.0.0
+  babylai: ^1.0.13+5
 ```
 
 Then run:
@@ -103,7 +100,7 @@ First, initialize BabylAI with the appropriate environment configuration and set
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:babylai_flutter/babylai_flutter.dart';
+import 'package:babylai/babylai_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -262,7 +259,7 @@ Here's a simple example of how to integrate BabylAI in your Flutter app:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:babylai_flutter/babylai_flutter.dart';
+import 'package:babylai/babylai_flutter.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -560,7 +557,7 @@ const ThemeConfig({
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:babylai_flutter/babylai_flutter.dart';
+import 'package:babylai/babylai_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

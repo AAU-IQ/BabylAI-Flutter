@@ -812,21 +812,6 @@ await BabylaiFlutter.initialize(
 5. **Provide recovery suggestions** to users when possible
 6. **Test error scenarios** to ensure proper error handling
 
-## Native SDK Versions
-
-This Flutter plugin wraps the following native SDKs:
-
-- **Android**: BabylAI Android SDK v1.0.61-beta
-  - Maven Central: `io.github.aau-iq:babylai-android-sdk:1.0.61-beta`
-  - Repository: [AAU-IQ/BabylAI-Android](https://github.com/AAU-IQ/BabylAI-Android)
-  - Minimum Android SDK: 24
-  - ✅ Automatic dependency management via Maven Central
-  
-- **iOS**: BabylAI iOS SDK v1.0.37
-  - Repository: [AAU-IQ/BabylAI-iOS](https://github.com/AAU-IQ/BabylAI-iOS)
-  - Minimum iOS Version: 13.0
-  - Automatic dependency management via CocoaPods
-
 ## Troubleshooting
 
 ### iOS Issues
@@ -899,5 +884,3 @@ For support, please contact: info@babylai.net
 - [BabylAI Flutter Plugin Repository](https://github.com/AAU-IQ/BabylAI-Flutter)
 - [BabylAI Android SDK](https://github.com/AAU-IQ/BabylAI-Android)
 - [BabylAI iOS SDK](https://github.com/AAU-IQ/BabylAI-iOS)
-- [Custom Logo Setup Guide](CUSTOM_LOGO.md)
-- [iOS Setup Guide](IOS_SETUP.md)

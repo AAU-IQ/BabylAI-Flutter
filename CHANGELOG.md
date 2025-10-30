@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.14 - 2025-10-30
+
+- Rename package to `babylai` on pub.dev
+- Update README installation to use `babylai: ^1.0.14`
+- Replace import paths to `package:babylai/babylai_flutter.dart`
+- Add concrete LICENSE file (proprietary terms)
+- Add initial CHANGELOG and metadata cleanup
+
 ## 1.0.13+5 - 2025-10-30
 
 - Initial release on pub.dev

@@ -1,1 +1,33 @@
-TODO: Add your license here.
+BabylAI Flutter Plugin License
+
+Copyright (c) 2025 BabylAI. All rights reserved.
+
+Permission is hereby granted to licensed and authorized BabylAI customers ("Licensees") to use
+this software solely for the purpose of integrating BabylAI services into authorized applications.
+This license is non-exclusive, non-transferable, and revocable.
+
+Restrictions:
+- You may not redistribute, publish, or make this software publicly available, in whole or in part,
+  except as embedded within your authorized application.
+- You may not sublicense, sell, lease, or otherwise transfer the software to any third party.
+- You may not modify, reverse engineer, decompile, or disassemble the software except to the extent
+  such activity is expressly permitted by applicable law notwithstanding this limitation.
+
+Ownership:
+BabylAI retains all right, title, and interest in and to this software, including all intellectual
+property rights. No rights are granted by implication or otherwise except as expressly set forth herein.
+
+Termination:
+This license terminates automatically if you breach any term. Upon termination, you must cease use and
+destroy all copies of the software in your possession or control.
+
+Disclaimer of Warranty:
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+Limitation of Liability:
+IN NO EVENT SHALL BABYLAI BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+For commercial licensing and authorization, contact: info@babylai.net

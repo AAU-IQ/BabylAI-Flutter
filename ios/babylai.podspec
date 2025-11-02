@@ -1,10 +1,10 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint babylai_flutter.podspec` to validate before publishing.
+# Run `pod lib lint babylai.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'babylai_flutter'
-  s.version          = '1.0.0+1'
+  s.name             = 'babylai'
+  s.version          = '1.0.14'
   s.summary          = 'Flutter plugin for BabylAI SDK - AI-powered chat integration.'
   s.description      = <<-DESC
 A Flutter plugin that provides integration with BabylAI chat functionality, 
@@ -87,5 +87,5 @@ supporting multiple themes, languages, and seamless native SDK integration.
   # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your
   # plugin's privacy impact, and then uncomment this line. For more information,
   # see https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
-  # s.resource_bundles = {'babylai_flutter_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+  # s.resource_bundles = {'babylai_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
 end

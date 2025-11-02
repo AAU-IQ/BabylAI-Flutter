@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.15 - 2025-11-02
+
+- Fix iOS podspec file name to match package name (`babylai.podspec`)
+- Update podspec version to sync with package version
+- iOS: CocoaPods integration now works correctly with pub.dev installation
+
 ## 1.0.14 - 2025-10-30
 
 - Rename package to `babylai` on pub.dev

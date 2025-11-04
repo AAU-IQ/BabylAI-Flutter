@@ -28,7 +28,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  babylai: ^1.0.13+5
+  babylai: ^1.0.16
 ```
 
 Then run:

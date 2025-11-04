@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.16 - 2025-11-04
+
+- Update iOS SDK to version 1.0.41: Support iPad layout
+
 ## 1.0.15 - 2025-11-02
 
 - Fix iOS podspec file name to match package name (`babylai.podspec`)

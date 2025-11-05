@@ -73,7 +73,7 @@ Future<void> main() async {
       debugPrint('📨 New message received: $message');
     },
     onError: (code, message, details) {
-      debugPrint('❌ Error [$code]: $message - $details');
+      print('❌ Error [$code]: $message - $details');
     },
   );
 

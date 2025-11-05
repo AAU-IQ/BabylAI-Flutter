@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.17 - 2025-11-05
+
+- iOS: Fix error screen when getting token (localized error UI with retry/back; logs restored)
+
 ## 1.0.16 - 2025-11-04
 
 - Update iOS SDK to version 1.0.41: Support iPad layout

@@ -28,7 +28,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  babylai: ^1.0.16
+  babylai_flutter: ^1.0.18
 ```
 
 Then run:

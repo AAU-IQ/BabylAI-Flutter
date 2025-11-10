@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.18 - 2025-11-10
+
+- Disable ripple effect
+
 ## 1.0.17 - 2025-11-05
 
 - iOS: Fix error screen when getting token (localized error UI with retry/back; logs restored)

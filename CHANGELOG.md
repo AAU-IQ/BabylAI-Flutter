@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.19 - 2025-12-28
+
+- Implement rating feature
+- Fix RTL layout support
+- Fix connection and messaging issues
+- General bug fixes
+
 ## 1.0.18 - 2025-11-10
 
 - Disable ripple effect

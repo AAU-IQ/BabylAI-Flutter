@@ -22,6 +22,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = uri("https://jitpack.io")
+        }
         // Flutter's Maven repository - required for Flutter artifacts
         maven {
             url = uri("https://storage.googleapis.com/download.flutter.io")

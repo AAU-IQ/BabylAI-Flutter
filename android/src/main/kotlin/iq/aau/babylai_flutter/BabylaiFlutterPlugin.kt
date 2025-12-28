@@ -34,9 +34,19 @@ class BabylaiFlutterPlugin :
     private var activity: Activity? = null
     private var tokenCallback: ((suspend () -> String))? = null
 
+    companion object {
+        @Volatile
+        private var instance: BabylaiFlutterPlugin? = null
+        
+        fun getInstance(): BabylaiFlutterPlugin? = instance
+        
+        fun getMethodChannel(): MethodChannel? = instance?.channel
+    }
+
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "babylai_flutter")
         channel.setMethodCallHandler(this)
+        instance = this
     }
 
     override fun onMethodCall(
@@ -59,6 +69,7 @@ class BabylaiFlutterPlugin :
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        instance = null
     }
 
     // ActivityAware

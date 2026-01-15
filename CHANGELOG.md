@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.22 - 2026-01-15
+
+- Handle `end_session` action type to automatically close chat session
+
 ## 1.0.21 - 2026-01-15
 
 - Redesign rating view

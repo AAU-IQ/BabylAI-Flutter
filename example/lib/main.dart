@@ -61,7 +61,8 @@ Future<void> main() async {
       secondaryColorHex: '#283238',
       primaryColorDarkHex: '#F05A28',
       secondaryColorDarkHex: '#ffffff',
-      headerLogo: 'meta', //Optional: Custom logo configuration:
+      headerLogo: 'meta',
+      logoSymbol: 'oxc'//Optional: Custom logo configuration:
       // - iOS: Add to Assets.xcassets as 'meta' OR use Flutter asset path 'assets/svgs/meta.svg'
       // - Android: Add meta.png to android/app/src/main/res/drawable/
       // See CUSTOM_LOGO.md for detailed setup instructions

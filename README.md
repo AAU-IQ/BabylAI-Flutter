@@ -28,7 +28,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  babylai_flutter: ^1.0.20
+  babylai_flutter: ^1.0.21
 ```
 
 Then run:
@@ -392,6 +392,7 @@ await BabylaiFlutter.initialize(
     
     // Custom logo (optional)
     headerLogo: 'company_logo',       // Your brand logo
+    logoSymbol: 'company_icon',       // Small icon for chat avatars
   ),
 );
 ```
@@ -401,6 +402,7 @@ await BabylaiFlutter.initialize(
 - **Secondary Color**: Agent chat bubbles, secondary elements, accent colors
 - **Container Colors**: Automatically generated lighter/darker variants for backgrounds
 - **Header Logo**: Replaces the default BabylAI logo in the interface
+- **Logo Symbol**: Small icon for chat avatars (falls back to headerLogo if not provided)
 
 ### Custom Logo
 
@@ -581,6 +583,7 @@ void main() async {
       primaryColorDarkHex: '#81C784',
       secondaryColorDarkHex: '#F9D71C',
       headerLogo: 'company_logo',
+      logoSymbol: 'company_icon',  // Small icon for chat avatars
     ),
     tokenCallback: () async {
       // Fetch token from your backend

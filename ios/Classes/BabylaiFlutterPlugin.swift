@@ -100,29 +100,39 @@ public class BabylaiFlutterPlugin: NSObject, FlutterPlugin {
             let primaryDark = cfg["primaryColorDarkHex"] as? String
             let secondaryDark = cfg["secondaryColorDarkHex"] as? String
             let headerLogoName = cfg["headerLogo"] as? String
+            let logoSymbolName = cfg["logoSymbol"] as? String
             
-            // Try to load the logo from iOS Assets or Flutter assets
-            var headerLogo: UIImage? = nil
-            if let logoName = headerLogoName {
+            // Helper function to load image from iOS Assets or Flutter assets
+            func loadImage(named name: String?) -> UIImage? {
+                guard let imageName = name else { return nil }
+                
                 // First try to load from iOS app bundle (Assets.xcassets)
-                headerLogo = UIImage(named: logoName)
+                if let image = UIImage(named: imageName) {
+                    return image
+                }
                 
                 // If not found, try to load from Flutter assets
-                if headerLogo == nil, let registrar = self.registrar {
-                    let key = registrar.lookupKey(forAsset: logoName)
+                if let registrar = self.registrar {
+                    let key = registrar.lookupKey(forAsset: imageName)
                     if let path = Bundle.main.path(forResource: key, ofType: nil),
                        let image = UIImage(contentsOfFile: path) {
-                        headerLogo = image
+                        return image
                     }
                 }
+                
+                return nil
             }
+            
+            let headerLogo = loadImage(named: headerLogoName)
+            let logoSymbol = loadImage(named: logoSymbolName)
             
             themeConfigArg = ThemeConfig(
                 primaryColorHex: primary,
                 secondaryColorHex: secondary,
                 primaryColorDarkHex: primaryDark,
                 secondaryColorDarkHex: secondaryDark,
-                headerLogo: headerLogo
+                headerLogo: headerLogo,
+                logoSymbol: logoSymbol
             )
         }
         

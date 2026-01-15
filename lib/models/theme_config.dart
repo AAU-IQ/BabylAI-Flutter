@@ -5,12 +5,17 @@ class ThemeConfig {
   final String? secondaryColorDarkHex;
   final String? headerLogo;
 
+  /// Custom logo symbol for small spaces like chat avatars.
+  /// If null, falls back to headerLogo, then default.
+  final String? logoSymbol;
+
   const ThemeConfig({
     this.primaryColorHex,
     this.secondaryColorHex,
     this.primaryColorDarkHex,
     this.secondaryColorDarkHex,
     this.headerLogo,
+    this.logoSymbol,
   });
 
   Map<String, String> toMap() {
@@ -26,6 +31,7 @@ class ThemeConfig {
       map['secondaryColorDarkHex'] = secondaryColorDarkHex!;
     }
     if (headerLogo != null) map['headerLogo'] = headerLogo!;
+    if (logoSymbol != null) map['logoSymbol'] = logoSymbol!;
     return map;
   }
 }

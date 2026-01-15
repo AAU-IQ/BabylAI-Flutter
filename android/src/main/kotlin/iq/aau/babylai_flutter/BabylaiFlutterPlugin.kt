@@ -101,28 +101,36 @@ class BabylaiFlutterPlugin :
         val themeMap = args["themeConfig"] as? Map<*, *>
         val themeConfig = themeMap?.let {
             val headerLogoName = it["headerLogo"] as? String
+            val logoSymbolName = it["logoSymbol"] as? String
             var headerLogoResId: Int? = null
-            if (headerLogoName != null) {
-                val ctx = activity ?: run {
-                    result.error("NO_ACTIVITY", "Activity not available for resource lookup", null); return@let null
-                }
-                // Try to find the logo in drawable resources
-                // Note: For Android, the logo must be added to android/app/src/main/res/drawable/
-                // Flutter assets cannot be used directly because the native SDK requires a resource ID
-                headerLogoResId = ctx.resources.getIdentifier(headerLogoName, "drawable", ctx.packageName)
-                if (headerLogoResId == 0) {
-                    headerLogoResId = null
-                    android.util.Log.w("BabylaiFlutter", "Logo '$headerLogoName' not found in drawable resources. " +
-                        "Please add it to android/app/src/main/res/drawable/ to use a custom logo.")
-                }
+            var logoSymbolResId: Int? = null
+            
+            val ctx = activity ?: run {
+                result.error("NO_ACTIVITY", "Activity not available for resource lookup", null); return@let null
             }
+            
+            // Helper function to find drawable resource by name
+            fun findDrawableResource(name: String?): Int? {
+                if (name == null) return null
+                val resId = ctx.resources.getIdentifier(name, "drawable", ctx.packageName)
+                if (resId == 0) {
+                    android.util.Log.w("BabylaiFlutter", "Resource '$name' not found in drawable resources. " +
+                        "Please add it to android/app/src/main/res/drawable/")
+                    return null
+                }
+                return resId
+            }
+            
+            headerLogoResId = findDrawableResource(headerLogoName)
+            logoSymbolResId = findDrawableResource(logoSymbolName)
 
             ThemeConfig(
                 primaryColorHex = it["primaryColorHex"] as? String,
                 secondaryColorHex = it["secondaryColorHex"] as? String,
                 primaryColorDarkHex = it["primaryColorDarkHex"] as? String,
                 secondaryColorDarkHex = it["secondaryColorDarkHex"] as? String,
-                headerLogoRes = headerLogoResId
+                headerLogoRes = headerLogoResId,
+                logoSymbolRes = logoSymbolResId
             )
         }
 

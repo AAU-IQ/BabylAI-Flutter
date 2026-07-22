@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.23 - 2026-07-22
+
+- Show an indicator when an agent joins the chat
+- Update native Android and iOS SDKs to 1.1.19
+
 ## 1.0.22 - 2026-01-15
 
 - Handle `end_session` action type to automatically close chat session

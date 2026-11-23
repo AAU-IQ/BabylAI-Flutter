@@ -56,10 +56,10 @@ Quick setup:
 
 2. **Update minimum iOS version**
 
-   Ensure your `ios/Podfile` has a minimum deployment target of iOS 13.0:
+   Ensure your `ios/Podfile` has a minimum deployment target of iOS 15.0:
 
    ```ruby
-   platform :ios, '13.0'
+   platform :ios, '15.0'
    ```
 
 3. **Run pod install**
@@ -820,7 +820,7 @@ await BabylaiFlutter.initialize(
 - **Solution**: Manually add the BabylAI Swift Package in Xcode as described in the iOS Setup section
 
 **Issue**: Minimum deployment target error
-- **Solution**: Ensure your `ios/Podfile` has `platform :ios, '13.0'` or higher
+- **Solution**: Ensure your `ios/Podfile` has `platform :ios, '15.0'` or higher
 
 **Issue**: Pod install fails
 - **Solution**: Try `cd ios && pod deintegrate && pod install`

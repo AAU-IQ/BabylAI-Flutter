@@ -16,7 +16,7 @@ supporting multiple themes, languages, and seamless native SDK integration.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '13.0'
+  s.platform = :ios, '15.0'
 
   # BabylAI iOS SDK - fetch prebuilt XCFramework from remote repo during pod install
   # This avoids manual Xcode setup and SPM configuration in consuming apps

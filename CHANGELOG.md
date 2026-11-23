@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.24 - 2026-11-23
+
+- Update native Android and iOS SDKs to 1.1.30
+- **Breaking:** iOS minimum deployment target raised to 15.0 (required by the 1.1.30 iOS SDK)
+
 ## 1.0.23 - 2026-07-22
 
 - Show an indicator when an agent joins the chat
